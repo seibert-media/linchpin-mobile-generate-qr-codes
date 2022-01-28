@@ -10,7 +10,7 @@ You need a current version of [Node](https://nodejs.org/en/) and [NPM](https://d
 
 Take a look into index.js and set the data to fill your needs:
 
-The Usernames you want to generate QR codes for:
+The usernames you want to generate QR codes for:
 
     let usernames = ['pwinter', 'tschroeder'];
 
@@ -18,7 +18,7 @@ The Confluence baseurl of your system:
 
     let serverUrl = 'https://mobile-test.linchpin-intranet.com';
 
-An Adminaccount for your system:
+An adminaccount for your system:
 
 
     let adminname = "adminuser";
