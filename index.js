@@ -1,6 +1,7 @@
 import QRCode from 'qrcode';
 import axios from "axios";
 import path from 'path';
+import * as fs from 'fs';
 
 // Usernames, you want to generate qrcodes for:
 let usernames = ['pwinter', 'tschroeder'];
@@ -26,13 +27,35 @@ async function createToken (username) {
 	return response.data;
 }
 
-usernames.forEach(async username => {
-	let token = await createToken(username);
+function checkTargetFolder () {
+	return new Promise((resolve, reject) => {
+		if (!fs.existsSync('qrcodes')) {
+			console.log("not exists");
+			fs.mkdir("qrcodes", {}, (error) => {
+				if (!error) {
+					resolve();
+				} else {
+					reject();
+				}
+			});
+		} else {
+			resolve();
+		}
+	})
+}
 
-	let savepath = path.resolve('qrcodes', username + '.png');
 
-	await QRCode.toFile(savepath, JSON.stringify(token));
-	console.log("code for " + username + " saved to qrcodes dir");
-});
+async function run() {
+	await checkTargetFolder();
+	usernames.forEach(async username => {
+		let token = await createToken(username);
 
+		let savepath = path.resolve('qrcodes', username + '.png');
+
+		await QRCode.toFile(savepath, JSON.stringify(token));
+		console.log("code for " + username + " saved to qrcodes dir");
+	});
+}
+
+run();
 
