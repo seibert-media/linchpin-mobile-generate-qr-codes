@@ -1,6 +1,7 @@
 # Example script for generating mass QR codes for linchpin mobile
 
-This script can be used to generate qr codes for the connection of linchpin mobile.
+This script can be used to generate qr codes for the connection of linchpin mobile. 
+Please find more information on our [help pages](https://info.seibert-media.net/display/DOC/Generate+Linchpin+Mobile+Gateway+logins+via+script).
 
 ## Prerequisites
 

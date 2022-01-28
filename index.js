@@ -7,7 +7,7 @@ import * as fs from 'fs';
 let usernames = ['pwinter', 'tschroeder'];
 
 // your confluence-url
-let serverUrl = 'https://mobile-test.linchpin-intranet.com';
+let serverUrl = 'https://demonstration.linchpin-intranet.com';
 
 // your admin authentication
 let adminname = "";
