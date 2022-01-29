@@ -25,6 +25,9 @@ An adminaccount for your system:
     let adminname = "adminuser";
     let adminpassword = "adminpassword";
 
+How long shall the qr codes be valid in hours? Default 24h
+
+    qrcodeValidFor = 24;
 
 ## Install and run
 
