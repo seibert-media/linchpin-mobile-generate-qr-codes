@@ -13,10 +13,13 @@ let serverUrl = 'https://demonstration.linchpin-intranet.com';
 let adminname = "";
 let adminpassword = "";
 
+// how long is the qrcode valid (hours)
+const qrcodeValidFor = 24;
+
 async function createToken (username) {
 	let response = await axios.put(
 			serverUrl + '/rest/linchpin-mobile/1.0/firescope/user/qrcode',
-			{"userName": username, "expiry": 1, "qrcodetype": 1},
+			{"userName": username, "expiry": 1, "qrcodetype": qrcodeValidFor},
 			{
 				auth: {
 					username: adminname,
@@ -45,17 +48,36 @@ function checkTargetFolder () {
 }
 
 
-async function run() {
+async function run () {
 	await checkTargetFolder();
-	usernames.forEach(async username => {
-		let token = await createToken(username);
 
-		let savepath = path.resolve('qrcodes', username + '.png');
+	for (let username of usernames) {
+		let token;
+		console.log("---------------------");
+		console.log("working on user 👤", username);
+		try {
+			token = await createToken(username);
+			console.log("✓ Succeeded to get a token from server for user 👤", username);
+		} catch (e) {
+			if (e.response && e.response.status) {
+				console.error("error getting token, server return status ", e.response.status, e.response.statusText);
+			} else {
+				console.error("✗ could not get token from server", e.message);
+			}
 
-		await QRCode.toFile(savepath, JSON.stringify(token));
-		console.log("code for " + username + " saved to qrcodes dir");
-	});
+		}
+		if (token) {
+			let savepath = path.resolve('qrcodes', username + '.png');
+			await QRCode.toFile(savepath, JSON.stringify(token));
+			console.log("✓ code for " + username + " saved to qrcodes dir " + savepath);
+		}
+	}
 }
 
-run();
-
+try {
+	 (async () => {
+		await run()
+	})();
+} catch (error) {
+	console.log("error", error);
+}
