@@ -29,6 +29,10 @@ How long shall the qr codes be valid in hours? Default 24h
 
     qrcodeValidFor = 24;
 
+Set a timeout after each processed user in order not to stress the server too much. This value is in ms. 
+
+    TIMEOUT_MS = 100;
+
 ## Install and run
 
     npm install
