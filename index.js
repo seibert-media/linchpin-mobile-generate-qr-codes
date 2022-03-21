@@ -16,6 +16,11 @@ let adminpassword = "";
 // how long is the qrcode valid (hours)
 const qrcodeValidFor = 24;
 
+// timeout after each request in ms
+const TIMEOUT_MS=100;
+
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 async function createToken (username) {
 	let response = await axios.put(
 			serverUrl + '/rest/linchpin-mobile/1.0/firescope/user/qrcode',
@@ -53,6 +58,7 @@ async function run () {
 
 	for (let username of usernames) {
 		let token;
+		await new Promise(r => setTimeout(r, TIMEOUT_MS));
 		console.log("---------------------");
 		console.log("working on user 👤", username);
 		try {
